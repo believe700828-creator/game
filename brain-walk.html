@@ -1,0 +1,754 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>두뇌 산책</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<style>
+/* Layout: night-indigo hero with drawn mountain ridges and moon; floating "오늘의 산책" card; 2-column game cards, each with its own colour and small illustration. Game screens keep a compact hero band. */
+:root{
+  --bg:#F2F3F8; --surface:#FFFFFF; --ink:#18203A; --muted:#565F78; --line:#DCE0EB;
+  --accent:#2E4A8C; --accent-ink:#FFFFFF; --gold:#E9AE2E; --gold-soft:#FBF0D3;
+  --good:#1F7A4A; --good-soft:#DCF0E3; --bad:#B4432C; --bad-soft:#F8E0D9;
+  --c-blocks:#E0604A; --c-numbers:#3556A6; --c-pairs:#24896A; --c-math:#C98A12; --c-proverb:#83519F;
+  --b1:#2F8F83; --b2:#E0A42A; --b3:#D0644B; --b4:#4C7CC0; --b5:#8A63B5; --b6:#5C9E4A;
+  --shadow:0 10px 30px rgba(22,32,64,.12);
+  --hero-ink:#FFF8E8; --hero-soft:rgba(255,248,232,.82); --hero-line:rgba(255,248,232,.32); --hero-fill:rgba(255,248,232,.09); --moon:#F4C95D;
+  --f-display:"Gowun Batang","Noto Serif KR",serif;
+  --f-body:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --base:20px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1322; --surface:#171F36; --ink:#EDF0F8; --muted:#A3ACC8; --line:#2A3453;
+    --accent:#93AAEB; --accent-ink:#0E1322; --gold:#F2C15A; --gold-soft:#3A3220;
+    --good:#74D39C; --good-soft:#1E3A2B; --bad:#EE8C73; --bad-soft:#40241D;
+    --c-blocks:#F08A74; --c-numbers:#8DA6EA; --c-pairs:#5CC9A4; --c-math:#F0C05A; --c-proverb:#C69BE0;
+    --b1:#4FC0AC; --b2:#F2BE5C; --b3:#EE8C73; --b4:#77A4E6; --b5:#B190DD; --b6:#86C870;
+    --shadow:0 10px 30px rgba(0,0,0,.35); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1322; --surface:#171F36; --ink:#EDF0F8; --muted:#A3ACC8; --line:#2A3453;
+  --accent:#93AAEB; --accent-ink:#0E1322; --gold:#F2C15A; --gold-soft:#3A3220;
+  --good:#74D39C; --good-soft:#1E3A2B; --bad:#EE8C73; --bad-soft:#40241D;
+  --c-blocks:#F08A74; --c-numbers:#8DA6EA; --c-pairs:#5CC9A4; --c-math:#F0C05A; --c-proverb:#C69BE0;
+  --b1:#4FC0AC; --b2:#F2BE5C; --b3:#EE8C73; --b4:#77A4E6; --b5:#B190DD; --b6:#86C870;
+  --shadow:0 10px 30px rgba(0,0,0,.35); color-scheme:dark;
+}
+:root[data-size="large"]{ --base:24px; }
+html{ font-size:var(--base); }
+body{ background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:1rem; line-height:1.6; margin:0; word-break:keep-all; }
+[hidden]{ display:none !important; }
+button{ font:inherit; color:inherit; cursor:pointer; }
+button:focus-visible{ outline:4px solid var(--gold); outline-offset:3px; }
+.gutter{ padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+
+/* Hero */
+.hero{ position:relative; overflow:hidden; background:linear-gradient(180deg, #111A35 0%, #1E2F62 70%, #2B4180 100%); color:var(--hero-ink); }
+.hero canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+.hero-in{ position:relative; max-width:960px; margin:0 auto; padding-block:26px 84px; display:grid; gap:12px; }
+.hero-top{ display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.eyebrow{ margin:0; font-size:.82rem; letter-spacing:.08em; color:var(--moon); font-weight:700; }
+.size-btn{ background:var(--hero-fill); color:var(--hero-ink); border:1.5px solid var(--hero-line); border-radius:999px; padding:.45rem 1rem; min-height:48px; font-weight:700; font-size:.9rem; }
+.size-btn[aria-pressed="true"]{ background:var(--moon); color:#1A1F33; border-color:var(--moon); }
+h1{ font-family:var(--f-display); font-weight:700; font-size:clamp(2.7rem, 11vw, 4.4rem); line-height:1.05; letter-spacing:-.02em; margin:6px 0 0; text-wrap:balance; }
+h1 em{ font-style:normal; color:var(--moon); }
+.lead{ margin:0; font-size:1.1rem; color:var(--hero-soft); max-width:26em; }
+.badges{ display:flex; flex-wrap:wrap; gap:8px; margin-top:4px; }
+.badge{ border:1px solid var(--hero-line); background:var(--hero-fill); padding:.25rem .85rem; border-radius:999px; font-size:.85rem; font-weight:500; }
+body.in-game .hero-in{ padding-block:14px 22px; gap:4px; }
+body.in-game h1{ font-size:1.9rem; margin:0; }
+body.in-game .lead, body.in-game .badges{ display:none; }
+
+/* Main */
+.wrap{ max-width:960px; margin:0 auto; padding-block:0 40px; }
+.today-card{ position:relative; margin-top:-52px; background:var(--surface); border:1px solid var(--line); border-radius:20px; box-shadow:var(--shadow); padding:16px 20px; display:grid; gap:10px; margin-bottom:22px; }
+.today-row{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap; }
+.today-row strong{ font-family:var(--f-display); font-size:1.3rem; }
+.today-row span{ color:var(--muted); font-weight:700; font-variant-numeric:tabular-nums; }
+.progress{ height:12px; border-radius:999px; background:var(--line); overflow:hidden; }
+.progress i{ display:block; height:100%; background:linear-gradient(90deg, var(--gold), var(--c-blocks)); border-radius:999px; transition:width .6s; }
+.today-msg{ margin:0; color:var(--muted); font-size:.92rem; }
+
+.grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap:18px; }
+.game-card{ --c:var(--accent); text-align:left; background:var(--surface); border:1.5px solid var(--line); border-radius:22px; padding:0; overflow:hidden; display:grid; grid-template-rows:auto 1fr; transition:transform .2s, box-shadow .2s, border-color .2s; }
+.game-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); border-color:var(--c); }
+.art{ height:132px; background:color-mix(in srgb, var(--c) 15%, var(--surface)); display:grid; place-items:center; position:relative; overflow:hidden; }
+.art::before{ content:""; position:absolute; width:220px; height:220px; border-radius:50%; right:-60px; top:-90px; background:color-mix(in srgb, var(--c) 14%, transparent); }
+.card-body{ padding:16px 20px 20px; display:grid; gap:6px; align-content:start; }
+.tag{ color:var(--c); font-weight:700; font-size:.8rem; letter-spacing:.06em; }
+.card-body h2{ font-family:var(--f-display); font-weight:700; font-size:1.5rem; line-height:1.25; margin:0; }
+.card-body p{ margin:0; color:var(--muted); font-size:.95rem; }
+.card-foot{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:8px; }
+.start{ background:var(--c); color:var(--surface); padding:.45rem 1.15rem; border-radius:999px; font-weight:800; }
+.chip{ background:var(--good-soft); color:var(--good); padding:.28rem .8rem; border-radius:999px; font-weight:700; font-size:.82rem; }
+
+/* card illustrations */
+.a-blocks{ position:relative; display:grid; grid-template-columns:repeat(5, 26px); grid-template-rows:repeat(3, 26px); gap:4px; }
+.a-blocks i{ border-radius:7px; background:var(--k); box-shadow:inset 0 -3px 0 rgba(0,0,0,.12); }
+.a-tiles{ position:relative; display:flex; gap:10px; }
+.a-tiles span{ width:58px; height:58px; border-radius:14px; background:var(--surface); border:2px solid color-mix(in srgb, var(--c) 40%, var(--line)); display:grid; place-items:center; font-weight:900; font-size:1.4rem; color:var(--c); }
+.a-tiles span.on{ background:var(--c); color:var(--surface); border-color:var(--c); }
+.a-tiles span.back{ background:var(--c); border-color:var(--c); color:var(--surface); background-image:radial-gradient(color-mix(in srgb, var(--surface) 25%, transparent) 18%, transparent 20%); background-size:14px 14px; }
+.a-math{ position:relative; font-family:var(--f-display); font-weight:700; font-size:2.4rem; color:var(--ink); letter-spacing:.02em; }
+.a-math b{ color:var(--c); }
+.a-bubble{ position:relative; background:var(--surface); border:2px solid color-mix(in srgb, var(--c) 45%, var(--line)); border-radius:18px; padding:.55rem 1.1rem; font-family:var(--f-display); font-weight:700; font-size:1.25rem; }
+.a-bubble::after{ content:""; position:absolute; left:26px; bottom:-10px; width:16px; height:16px; background:var(--surface); border-right:2px solid color-mix(in srgb, var(--c) 45%, var(--line)); border-bottom:2px solid color-mix(in srgb, var(--c) 45%, var(--line)); transform:rotate(45deg); }
+.a-bubble b{ color:var(--c); }
+
+/* game screen */
+.bar{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; margin-top:18px; }
+.back-btn{ background:var(--surface); border:1.5px solid var(--line); border-radius:14px; padding:.5rem 1rem; min-height:54px; font-weight:700; }
+.stats{ display:flex; flex-wrap:wrap; gap:8px; }
+.stat{ background:var(--surface); border:1.5px solid var(--line); border-radius:12px; padding:.3rem .85rem; font-variant-numeric:tabular-nums; }
+.gtitle{ font-family:var(--f-display); font-weight:700; font-size:2rem; margin:18px 0 2px; text-wrap:balance; }
+.hint{ margin:0 0 14px; color:var(--muted); }
+.levels{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+.lv{ background:var(--surface); border:1.5px solid var(--line); border-radius:999px; padding:.42rem 1rem; min-height:50px; font-weight:700; }
+.lv[aria-pressed="true"]{ background:var(--accent); border-color:var(--accent); color:var(--accent-ink); }
+.rule{ text-align:center; font-weight:700; margin:0 0 10px; }
+
+.next-box{ display:flex; align-items:center; justify-content:center; gap:14px; background:var(--gold-soft); border-radius:16px; padding:10px 16px; margin:0 auto 16px; max-width:520px; font-size:1.05rem; font-weight:700; min-height:64px; }
+.next-box strong{ font-weight:900; font-size:2.1rem; line-height:1; font-variant-numeric:tabular-nums; }
+.board{ display:grid; grid-template-columns:repeat(var(--cols), 1fr); gap:10px; max-width:520px; margin:0 auto; }
+.cell{ aspect-ratio:1; border:1.5px solid var(--line); border-radius:16px; background:var(--surface); font-weight:900; font-size:calc(min(520px, 100vw - 32px) / var(--cols) * .36); display:grid; place-items:center; box-shadow:0 3px 0 var(--line); transition:background .15s; }
+.cell:active{ transform:translateY(2px); box-shadow:none; }
+.cell.done{ background:var(--good-soft); border-color:var(--good); color:var(--good); box-shadow:none; }
+.cell.wrong{ animation:shake .4s; background:var(--bad-soft); border-color:var(--bad); }
+@keyframes shake{ 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
+
+.pcard{ aspect-ratio:1; border-radius:16px; border:2px solid var(--c-pairs); padding:0; position:relative; overflow:hidden; background:var(--c-pairs);
+  background-image:radial-gradient(color-mix(in srgb, var(--surface) 25%, transparent) 18%, transparent 20%); background-size:18px 18px; }
+.pcard::after{ content:"?"; position:absolute; inset:0; display:grid; place-items:center; font-family:var(--f-display); font-weight:700; color:var(--surface); font-size:calc(min(560px, 100vw - 32px) / var(--cols) * .36); }
+.pcard .face{ display:none; }
+.pcard.open{ background:var(--surface); background-image:none; border-color:var(--line); animation:flip .25s; }
+.pcard.open::after{ content:none; }
+.pcard.open .face{ display:grid; place-items:center; align-content:center; gap:2px; height:100%; }
+.pcard.matched{ background:var(--good-soft); border-color:var(--good); }
+.pic{ font-size:calc(min(560px, 100vw - 32px) / var(--cols) * .38); line-height:1.1; }
+.word{ font-size:min(.8rem, 3.2vw); font-weight:700; color:var(--muted); white-space:nowrap; }
+.board.pairs{ max-width:560px; }
+@keyframes flip{ from{transform:scaleX(.2)} to{transform:scaleX(1)} }
+
+.q-box{ background:var(--surface); border:1.5px solid var(--line); border-radius:22px; padding:24px; max-width:660px; margin:0 auto; display:grid; gap:18px; box-shadow:var(--shadow); }
+.q-label{ justify-self:center; background:var(--gold-soft); padding:.2rem .9rem; border-radius:999px; font-weight:700; font-size:.88rem; }
+.q-text{ font-family:var(--f-display); font-weight:700; font-size:2rem; line-height:1.45; text-align:center; text-wrap:balance; }
+.q-text.sm{ font-size:1.45rem; }
+.choices{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.choices.wide{ grid-template-columns:1fr; }
+.choice{ min-height:66px; border:1.5px solid var(--line); border-radius:14px; background:var(--bg); font-size:1.2rem; font-weight:700; padding:.5rem .9rem; font-variant-numeric:tabular-nums; }
+.choice:hover:not([disabled]){ border-color:var(--accent); }
+.choice.right{ background:var(--good-soft); border-color:var(--good); color:var(--good); }
+.choice.wrong{ background:var(--bad-soft); border-color:var(--bad); color:var(--bad); }
+.choice[disabled]{ cursor:default; }
+.feedback{ text-align:center; font-size:1.15rem; font-weight:700; min-height:1.6em; }
+.feedback .ok{ color:var(--good); } .feedback .no{ color:var(--bad); }
+.feedback small{ display:block; font-weight:500; color:var(--muted); font-size:1rem; font-family:var(--f-display); }
+
+.btn{ background:var(--accent); color:var(--accent-ink); border:0; border-radius:14px; padding:.75rem 1.4rem; min-height:58px; font-size:1.08rem; font-weight:700; }
+.btn.ghost{ background:var(--surface); color:var(--ink); border:1.5px solid var(--line); }
+.center{ display:flex; justify-content:center; }
+.finish{ background:var(--surface); border:1.5px solid var(--line); border-radius:22px; padding:30px 20px; max-width:560px; margin:0 auto; text-align:center; display:grid; gap:8px; box-shadow:var(--shadow); }
+.finish .moon{ width:56px; height:56px; border-radius:50%; margin:0 auto 4px; background:radial-gradient(circle at 35% 35%, #FFE7A3, var(--moon)); box-shadow:0 0 0 10px var(--gold-soft); }
+.finish h3{ font-family:var(--f-display); font-weight:700; font-size:2.1rem; margin:0; }
+.finish p{ margin:0; font-size:1.12rem; }
+.row{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:14px; }
+
+.tb{ display:flex; gap:12px; justify-content:center; align-items:flex-start; }
+.tb-main{ position:relative; flex:none; }
+#cv{ display:block; border-radius:14px; border:1.5px solid var(--line); background:var(--surface); }
+.tb-side{ display:grid; gap:10px; width:96px; flex:none; }
+.tb-next{ background:var(--surface); border:1.5px solid var(--line); border-radius:14px; padding:8px 4px; display:grid; gap:4px; justify-items:center; font-size:.8rem; font-weight:700; color:var(--muted); }
+.tb-side .btn{ min-height:52px; padding:.4rem; font-size:.9rem; }
+.tb-over{ position:absolute; inset:0; display:grid; place-items:center; align-content:center; gap:14px; background:color-mix(in srgb, var(--bg) 85%, transparent); border-radius:14px; text-align:center; font-family:var(--f-display); font-weight:700; font-size:1.5rem; }
+.pad{ display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; max-width:520px; margin:16px auto 0; }
+.pk{ min-height:66px; border-radius:16px; border:1.5px solid var(--line); background:var(--surface); font-size:1.4rem; font-weight:700; touch-action:manipulation; user-select:none; -webkit-user-select:none; box-shadow:0 3px 0 var(--line); }
+.pk:active{ background:var(--gold-soft); transform:translateY(2px); box-shadow:none; }
+.pk.rot{ font-size:1.05rem; }
+.pk.wide{ grid-column:1 / -1; background:var(--c-blocks); color:var(--surface); border-color:var(--c-blocks); font-size:1.15rem; box-shadow:none; }
+.keys-hint{ text-align:center; color:var(--muted); font-size:.85rem; margin:10px 0 0; }
+
+footer{ margin-top:44px; padding-top:16px; border-top:1.5px solid var(--line); color:var(--muted); font-size:.85rem; display:grid; gap:4px; }
+footer p{ margin:0; }
+
+@media (max-width:440px){ .q-text{ font-size:1.65rem; } .q-box{ padding:18px; } .art{ height:116px; } }
+@media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
+</style>
+
+<header class="hero">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="hero-in gutter">
+    <div class="hero-top">
+      <p class="eyebrow">시니어 세상만사 · 두뇌 건강 놀이</p>
+      <button class="size-btn" id="size-toggle" aria-pressed="false">글자 크게</button>
+    </div>
+    <h1>두뇌 <em>산책</em></h1>
+    <p class="lead">하루 5분, 천천히 걷듯 머리를 깨우는 놀이 다섯 가지</p>
+    <div class="badges"><span class="badge">시간 제한 없음</span><span class="badge">틀려도 괜찮아요</span><span class="badge">큰 글씨</span></div>
+  </div>
+</header>
+<div class="wrap gutter">
+  <main id="app"></main>
+  <footer>
+    <p>가볍게 즐기는 두뇌 활동 놀이입니다. 의학적 진단이나 치료를 대신하지 않아요.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var app = document.getElementById('app');
+
+  var store = {
+    get: function(k, d){ try{ var v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); }catch(e){ return d; } },
+    set: function(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+  };
+  var now = new Date();
+  var today = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+  function doneToday(){ return store.get('done-' + today, []); }
+  function markDone(id){ var s = doneToday(); if (s.indexOf(id) < 0){ s.push(id); store.set('done-' + today, s); } }
+
+  function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function rand(a, b){ return a + Math.floor(Math.random() * (b - a + 1)); }
+  function fmtTime(s){ var m = Math.floor(s / 60), r = s % 60; return m ? m + '분 ' + r + '초' : r + '초'; }
+  function won(n){ return n.toLocaleString('ko-KR') + '원'; }
+
+  var cleanup = null;
+  function setCleanup(fn){ if (cleanup) cleanup(); cleanup = fn || null; }
+
+  /* 밤하늘 산자락 */
+  var sky = document.getElementById('sky');
+  var seed = Math.random() * 1000;
+  function drawSky(){
+    var r = sky.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+    if (!r.width) return;
+    sky.width = r.width * dpr; sky.height = r.height * dpr;
+    var g = sky.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var W = r.width, H = r.height;
+    g.clearRect(0, 0, W, H);
+    var s = seed;
+    function rnd(){ s = (s * 9301 + 49297) % 233280; return s / 233280; }
+    for (var i = 0; i < 46; i++){
+      var x = rnd() * W, y = rnd() * H * 0.55, a = 0.25 + rnd() * 0.6;
+      g.fillStyle = 'rgba(255,248,232,' + a + ')'; g.beginPath(); g.arc(x, y, rnd() < 0.15 ? 1.6 : 0.9, 0, Math.PI * 2); g.fill();
+    }
+    var mx = W * (W < 600 ? 0.82 : 0.8), my = H * 0.3, mr = Math.min(46, Math.max(26, W * 0.05));
+    var glow = g.createRadialGradient(mx, my, mr * 0.6, mx, my, mr * 3.2);
+    glow.addColorStop(0, 'rgba(244,201,93,.35)'); glow.addColorStop(1, 'rgba(244,201,93,0)');
+    g.fillStyle = glow; g.beginPath(); g.arc(mx, my, mr * 3.2, 0, Math.PI * 2); g.fill();
+    var moon = g.createRadialGradient(mx - mr * .35, my - mr * .35, mr * .1, mx, my, mr);
+    moon.addColorStop(0, '#FFEFC2'); moon.addColorStop(1, '#F4C95D');
+    g.fillStyle = moon; g.beginPath(); g.arc(mx, my, mr, 0, Math.PI * 2); g.fill();
+    var layers = [
+      { base:.58, amp:.10, col:'rgba(84,110,180,.45)', f:1.3 },
+      { base:.68, amp:.09, col:'rgba(58,80,150,.65)', f:2.1 },
+      { base:.78, amp:.07, col:'rgba(36,54,112,.85)', f:3.0 },
+      { base:.88, amp:.05, col:'rgba(20,32,74,1)', f:4.2 }
+    ];
+    layers.forEach(function(L, li){
+      var p1 = rnd() * 6, p2 = rnd() * 6;
+      g.fillStyle = L.col; g.beginPath(); g.moveTo(0, H);
+      for (var x = 0; x <= W; x += 6){
+        var t = x / W;
+        var y = H * (L.base - L.amp * (0.6 * Math.sin(t * L.f * Math.PI + p1) + 0.4 * Math.sin(t * L.f * 2.7 * Math.PI + p2)));
+        g.lineTo(x, y);
+      }
+      g.lineTo(W, H); g.closePath(); g.fill();
+    });
+  }
+  window.addEventListener('resize', drawSky);
+
+  /* 글자 크기 */
+  var sizeBtn = document.getElementById('size-toggle');
+  function applySize(s){
+    if (s === 'large') document.documentElement.setAttribute('data-size', 'large');
+    else document.documentElement.removeAttribute('data-size');
+    sizeBtn.textContent = s === 'large' ? '글자 보통' : '글자 크게';
+    sizeBtn.setAttribute('aria-pressed', s === 'large' ? 'true' : 'false');
+    requestAnimationFrame(drawSky);
+  }
+  applySize(store.get('size', 'normal'));
+  sizeBtn.onclick = function(){ var s = store.get('size', 'normal') === 'large' ? 'normal' : 'large'; store.set('size', s); applySize(s); };
+
+  var GAMES = {
+    blocks: { color:'--c-blocks', tag:'공간 감각 · 판단력', title:'차곡차곡 블록 쌓기', desc:'떨어지는 블록을 옮기고 돌려 가로 한 줄을 빈틈없이 채워요. 채운 줄은 사라져요.',
+      art:'<div class="a-blocks">' +
+        [[1,1,4],[2,1,4],[3,1,4],[3,2,4],[2,2,2],[2,3,2],[3,3,2],[3,4,2],[1,5,3],[2,4,3],[2,5,3],[3,5,3]].map(function(c){ return '<i style="grid-row:' + c[0] + ';grid-column:' + c[1] + ';--k:var(--b' + c[2] + ')"></i>'; }).join('') + '</div>' },
+    numbers: { color:'--c-numbers', tag:'집중력 · 주의 전환', title:'숫자 순서 누르기', desc:'작은 수부터, 거꾸로, 숫자와 한글 번갈아… 규칙에 맞게 순서를 찾아 눌러요.',
+      art:'<div class="a-tiles"><span class="on">1</span><span>가</span><span>2</span><span>나</span></div>' },
+    pairs: { color:'--c-pairs', tag:'기억력', title:'같은 그림 짝 맞추기', desc:'카드를 두 장씩 열어 같은 그림을 찾아요. 어디 있었는지 기억하는 놀이예요.',
+      art:'<div class="a-tiles"><span class="back"></span><span>🍎</span><span class="back"></span><span>🍎</span></div>' },
+    math: { color:'--c-math', tag:'계산력', title:'시장 셈하기', desc:'덧셈, 뺄셈, 구구단, 거스름돈 계산을 10문제 천천히 풀어요.',
+      art:'<div class="a-math">7 + 5 = <b>?</b></div>' },
+    idiom: { color:'--c-proverb', tag:'어휘력 · 한자', title:'사자성어 맞히기', desc:'하·중·상 세 단계, 사자성어 65개. 뜻 풀이부터 한자 읽기까지 도전해요.',
+      art:'<div class="a-bubble">一石<b>二鳥</b></div>' }
+  };
+  var IDS = ['idiom', 'blocks', 'math', 'pairs', 'numbers'];
+
+  function home(){
+    setCleanup();
+    var done = doneToday(), n = done.filter(function(d){ return GAMES[d]; }).length, total = IDS.length;
+    var msg = n === 0 ? '마음 가는 놀이부터 하나 골라 보세요.' : n < total ? '좋아요! 남은 놀이도 천천히 즐겨 보세요.' : '오늘의 산책을 모두 마치셨어요. 내일 또 만나요.';
+    app.innerHTML =
+      '<section class="today-card" aria-label="오늘의 산책"><div class="today-row"><strong>오늘의 산책</strong><span>' + n + ' / ' + total + ' 완료</span></div>' +
+      '<div class="progress"><i style="width:' + Math.round(n / total * 100) + '%"></i></div><p class="today-msg">' + msg + '</p></section>' +
+      '<div class="grid">' + IDS.map(function(id){
+        var g = GAMES[id];
+        return '<button class="game-card" style="--c:var(' + g.color + ')" data-go="' + id + '"><div class="art" aria-hidden="true">' + g.art + '</div>' +
+          '<div class="card-body"><span class="tag">' + g.tag + '</span><h2>' + g.title + '</h2><p>' + g.desc + '</p>' +
+          '<div class="card-foot"><span class="start">시작하기 →</span>' + (done.indexOf(id) >= 0 ? '<span class="chip">오늘 완료</span>' : '') + '</div></div></button>';
+      }).join('') + '</div>';
+    app.querySelectorAll('[data-go]').forEach(function(b){ b.onclick = function(){ location.hash = b.getAttribute('data-go'); }; });
+  }
+
+  function shell(id, hint){
+    app.innerHTML =
+      '<div class="bar"><button class="back-btn" id="back">← 놀이 목록</button><div class="stats" id="stats" aria-live="polite"></div></div>' +
+      '<h2 class="gtitle">' + GAMES[id].title + '</h2><p class="hint">' + hint + '</p>' +
+      '<div id="controls"></div><div id="stage"></div>';
+    document.getElementById('back').onclick = function(){ location.hash = ''; };
+    return { stats: document.getElementById('stats'), controls: document.getElementById('controls'), stage: document.getElementById('stage') };
+  }
+
+  function levelPicker(el, key, levels, cur, onPick){
+    el.innerHTML = '<div class="levels" role="group" aria-label="난이도">' + levels.map(function(l){
+      return '<button class="lv" data-lv="' + l.id + '" aria-pressed="' + (l.id === cur) + '">' + l.label + '</button>';
+    }).join('') + '</div>';
+    el.querySelectorAll('.lv').forEach(function(b){ b.onclick = function(){ var v = b.getAttribute('data-lv'); store.set(key, v); onPick(v); }; });
+  }
+
+  function finish(stage, title, lines, again){
+    stage.innerHTML = '<div class="finish" role="status"><div class="moon" aria-hidden="true"></div><h3>' + title + '</h3>' + lines.map(function(l){ return '<p>' + l + '</p>'; }).join('') +
+      '<div class="row"><button class="btn" id="again">한 판 더 하기</button><button class="btn ghost" id="other">다른 놀이 고르기</button></div></div>';
+    stage.querySelector('#again').onclick = again;
+    stage.querySelector('#other').onclick = function(){ location.hash = ''; };
+    stage.scrollIntoView({ block:'center', behavior:'smooth' });
+    stage.querySelector('#again').focus({ preventScroll:true });
+  }
+
+  /* 차곡차곡 블록 쌓기 */
+  var BIG = [ [[1,1,1,1]], [[1,1],[1,1]], [[0,1,0],[1,1,1]], [[0,1,1],[1,1,0]], [[1,1,0],[0,1,1]], [[1,0,0],[1,1,1]], [[0,0,1],[1,1,1]] ];
+  var SMALL = [ [[1]], [[1,1]], [[1,1,1]], [[1,0],[1,1]] ];
+  function rotate(m){ return m[0].map(function(_, i){ return m.map(function(r){ return r[i]; }).reverse(); }); }
+
+  function blocksGame(){
+    var ui = shell('blocks', '블록을 옮기고 돌려서 가로 한 줄을 빈틈없이 채우면 그 줄이 사라져요. 흐린 그림자는 블록이 떨어질 자리예요.');
+    var LV = [{id:'easy',label:'쉬움 · 작은 블록 포함'},{id:'normal',label:'보통'}];
+    var lv = store.get('lv-blocks', 'easy'); if (!LV.some(function(l){ return l.id === lv; })) lv = 'easy';
+
+    function start(){
+      levelPicker(ui.controls, 'lv-blocks', LV, lv, function(v){ lv = v; start(); });
+      var COLS = 10, ROWS = 16, cell = 26, dpr = window.devicePixelRatio || 1;
+      var grid = [], r0; for (r0 = 0; r0 < ROWS; r0++) grid.push(new Array(COLS).fill(0));
+      var score = 0, lines = 0, best = store.get('best-blocks-' + lv, 0);
+      var cur = null, next = null, px = 0, py = 0;
+      var paused = false, over = false, raf = 0, last = 0, acc = 0;
+
+      ui.stage.innerHTML =
+        '<div class="tb"><div class="tb-main"><canvas id="cv" role="img" aria-label="블록 놀이판"></canvas><div class="tb-over" id="ov" hidden></div></div>' +
+        '<div class="tb-side"><div class="tb-next">다음 블록<canvas id="nx"></canvas></div><button class="btn ghost" id="pause">잠깐 멈춤</button></div></div>' +
+        '<div class="pad" id="pad"><button class="pk" data-a="left" aria-label="왼쪽으로">◀</button><button class="pk rot" data-a="rotate">돌리기</button>' +
+        '<button class="pk" data-a="right" aria-label="오른쪽으로">▶</button><button class="pk" data-a="down" aria-label="한 칸 내리기">▼</button>' +
+        '<button class="pk wide" data-a="drop">바로 내리기</button></div>' +
+        '<p class="keys-hint">컴퓨터에서는 방향키(↑ 돌리기)와 스페이스바(바로 내리기)로도 할 수 있어요.</p>';
+      var cv = ui.stage.querySelector('#cv'), ctx = cv.getContext('2d');
+      var nx = ui.stage.querySelector('#nx'), nctx = nx.getContext('2d');
+      var ov = ui.stage.querySelector('#ov'), pauseBtn = ui.stage.querySelector('#pause');
+
+      function size(){
+        var avail = Math.min(ui.stage.clientWidth || 360, 560);
+        var byW = Math.floor((avail - 96 - 12 - 4) / COLS);
+        var byH = Math.floor((window.innerHeight * 0.6) / ROWS);
+        cell = Math.max(18, Math.min(34, byW, byH));
+        cv.style.width = cell * COLS + 'px'; cv.style.height = cell * ROWS + 'px';
+        cv.width = cell * COLS * dpr; cv.height = cell * ROWS * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        var ns = Math.floor(cell * 0.75) * 4;
+        nx.style.width = ns + 'px'; nx.style.height = ns + 'px'; nx.width = ns * dpr; nx.height = ns * dpr; nctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      function newPiece(){
+        var pool = lv === 'easy' ? BIG.concat(SMALL) : BIG;
+        var k = Math.floor(Math.random() * pool.length);
+        return { m: pool[k], c: (k % 6) + 1 };
+      }
+      function hit(m, x, y){
+        for (var r = 0; r < m.length; r++) for (var c = 0; c < m[r].length; c++){
+          if (!m[r][c]) continue;
+          var gx = x + c, gy = y + r;
+          if (gx < 0 || gx >= COLS || gy >= ROWS) return true;
+          if (gy >= 0 && grid[gy][gx]) return true;
+        }
+        return false;
+      }
+      function spawn(){
+        cur = next || newPiece(); next = newPiece();
+        px = Math.floor((COLS - cur.m[0].length) / 2); py = 0;
+        if (hit(cur.m, px, py)) gameOver();
+      }
+      function lock(){
+        var top = false;
+        cur.m.forEach(function(row, r){ row.forEach(function(v, c){ if (!v) return; if (py + r < 0) top = true; else grid[py + r][px + c] = cur.c; }); });
+        if (top){ gameOver(); return; }
+        var kept = grid.filter(function(row){ return row.some(function(v){ return !v; }); });
+        var n = ROWS - kept.length;
+        while (kept.length < ROWS) kept.unshift(new Array(COLS).fill(0));
+        grid = kept;
+        if (n){ lines += n; score += [0, 100, 300, 500, 800][Math.min(n, 4)]; }
+        stats(); spawn();
+      }
+      function speed(){ var base = lv === 'easy' ? 1000 : 750; return Math.max(220, base * Math.pow(0.9, Math.floor(lines / 8))); }
+      function step(){ if (!hit(cur.m, px, py + 1)) py++; else lock(); }
+      function act(a){
+        if (paused || over || !cur) return;
+        if (a === 'left' && !hit(cur.m, px - 1, py)) px--;
+        else if (a === 'right' && !hit(cur.m, px + 1, py)) px++;
+        else if (a === 'down'){ step(); acc = 0; }
+        else if (a === 'rotate'){
+          var m = rotate(cur.m), kicks = [0, -1, 1, -2, 2];
+          for (var i = 0; i < kicks.length; i++){ if (!hit(m, px + kicks[i], py)){ cur.m = m; px += kicks[i]; break; } }
+        }
+        else if (a === 'drop'){ while (!hit(cur.m, px, py + 1)) py++; lock(); acc = 0; }
+        if (!over) draw();
+      }
+      function stats(){
+        ui.stats.innerHTML = '<span class="stat">점수 <strong>' + score.toLocaleString('ko-KR') + '</strong></span><span class="stat">지운 줄 <strong>' + lines + '</strong></span>' +
+          (best ? '<span class="stat">최고 <strong>' + best.toLocaleString('ko-KR') + '</strong></span>' : '');
+      }
+      function col(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+      function box(g, x, y, s, color, alpha){
+        g.globalAlpha = alpha == null ? 1 : alpha; g.fillStyle = color; g.beginPath();
+        if (g.roundRect) g.roundRect(x + 1.5, y + 1.5, s - 3, s - 3, Math.max(3, s * 0.2)); else g.rect(x + 1.5, y + 1.5, s - 3, s - 3);
+        g.fill();
+        if (alpha == null){ g.fillStyle = 'rgba(0,0,0,.12)'; g.fillRect(x + 3, y + s - 5, s - 6, 2.5); }
+        g.globalAlpha = 1;
+      }
+      function draw(){
+        var W = cell * COLS, H = cell * ROWS, colors = [null];
+        for (var i = 1; i <= 6; i++) colors.push(col('--b' + i));
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = col('--surface'); ctx.fillRect(0, 0, W, H);
+        ctx.strokeStyle = col('--line'); ctx.lineWidth = 1; ctx.globalAlpha = 0.55; ctx.beginPath();
+        for (var x = 1; x < COLS; x++){ ctx.moveTo(x * cell + 0.5, 0); ctx.lineTo(x * cell + 0.5, H); }
+        for (var y = 1; y < ROWS; y++){ ctx.moveTo(0, y * cell + 0.5); ctx.lineTo(W, y * cell + 0.5); }
+        ctx.stroke(); ctx.globalAlpha = 1;
+        grid.forEach(function(row, r){ row.forEach(function(v, c){ if (v) box(ctx, c * cell, r * cell, cell, colors[v]); }); });
+        if (cur && !over){
+          var gy = py; while (!hit(cur.m, px, gy + 1)) gy++;
+          cur.m.forEach(function(row, r){ row.forEach(function(v, c){ if (v && gy + r >= 0) box(ctx, (px + c) * cell, (gy + r) * cell, cell, colors[cur.c], 0.25); }); });
+          cur.m.forEach(function(row, r){ row.forEach(function(v, c){ if (v && py + r >= 0) box(ctx, (px + c) * cell, (py + r) * cell, cell, colors[cur.c]); }); });
+        }
+        var ns = Math.floor(cell * 0.75), NW = ns * 4;
+        nctx.clearRect(0, 0, NW, NW);
+        if (next){
+          var ox = (NW - next.m[0].length * ns) / 2, oy = (NW - next.m.length * ns) / 2;
+          next.m.forEach(function(row, r){ row.forEach(function(v, c){ if (v) box(nctx, ox + c * ns, oy + r * ns, ns, colors[next.c]); }); });
+        }
+      }
+      function frame(t){
+        if (!last) last = t;
+        var dt = t - last; last = t;
+        if (!paused && !over){ acc += dt; if (acc >= speed()){ acc = 0; step(); } }
+        if (!over){ draw(); raf = requestAnimationFrame(frame); }
+      }
+      function setPaused(p){
+        if (over) return;
+        paused = p;
+        pauseBtn.textContent = p ? '계속하기' : '잠깐 멈춤';
+        if (p){ ov.hidden = false; ov.innerHTML = '<span>잠깐 쉬는 중</span><button class="btn" id="resume">계속하기</button>'; ov.querySelector('#resume').onclick = function(){ setPaused(false); }; }
+        else { ov.hidden = true; last = 0; }
+      }
+      function gameOver(){
+        if (over) return;
+        over = true; cancelAnimationFrame(raf); draw();
+        markDone('blocks');
+        var isBest = score > best; if (isBest) store.set('best-blocks-' + lv, score);
+        setCleanup();
+        setTimeout(function(){
+          finish(ui.stage, '블록이 꼭대기까지 찼어요', ['점수 ' + score.toLocaleString('ko-KR') + '점 · 지운 줄 ' + lines + '줄',
+            isBest ? (score ? '지금까지 가장 높은 점수예요!' : '다음 판에는 한 줄을 채워 봐요.') : '최고 점수는 ' + best.toLocaleString('ko-KR') + '점이에요.'], start);
+        }, 700);
+      }
+
+      pauseBtn.onclick = function(){ setPaused(!paused); };
+      ui.stage.querySelectorAll('.pk').forEach(function(b){
+        var a = b.getAttribute('data-a'), t1 = 0, t2 = 0;
+        function stop(){ clearTimeout(t1); clearInterval(t2); }
+        b.addEventListener('pointerdown', function(e){
+          e.preventDefault(); act(a);
+          if (a === 'left' || a === 'right' || a === 'down'){ stop(); t1 = setTimeout(function(){ t2 = setInterval(function(){ act(a); }, 110); }, 300); }
+        });
+        ['pointerup','pointerleave','pointercancel'].forEach(function(ev){ b.addEventListener(ev, stop); });
+        b.addEventListener('click', function(e){ if (e.detail === 0) act(a); });
+      });
+      function onKey(e){
+        var map = { ArrowLeft:'left', ArrowRight:'right', ArrowDown:'down', ArrowUp:'rotate', ' ':'drop' };
+        if (map[e.key]){ e.preventDefault(); act(map[e.key]); }
+        else if (e.key === 'p' || e.key === 'P'){ setPaused(!paused); }
+      }
+      function onVis(){ if (document.hidden) setPaused(true); }
+      document.addEventListener('keydown', onKey);
+      document.addEventListener('visibilitychange', onVis);
+      window.addEventListener('resize', size);
+      setCleanup(function(){ cancelAnimationFrame(raf); document.removeEventListener('keydown', onKey); document.removeEventListener('visibilitychange', onVis); window.removeEventListener('resize', size); });
+
+      size(); stats(); spawn(); draw();
+      raf = requestAnimationFrame(frame);
+    }
+    start();
+  }
+
+  /* 숫자 순서 누르기 */
+  function numbersGame(){
+    var ui = shell('numbers', '규칙에 맞는 순서대로 눌러 주세요. 틀려도 괜찮아요. 천천히 하셔도 됩니다.');
+    var MODES = {
+      basic:   { label:'기본 1→16', cols:4, rule:'1부터 16까지 차례대로 눌러요.' },
+      small:   { label:'작은 수부터', cols:4, rule:'흩어진 수 중에서 가장 작은 수부터 큰 수까지 차례대로 눌러요.' },
+      alt:     { label:'숫자·한글 번갈아', cols:4, rule:'1 → 가 → 2 → 나 → 3 → 다 … 숫자와 한글을 번갈아 눌러요.' },
+      reverse: { label:'거꾸로 25→1', cols:5, rule:'25부터 1까지 거꾸로 눌러요.' }
+    };
+    var LV = Object.keys(MODES).map(function(k){ return { id:k, label:MODES[k].label }; });
+    var lv = store.get('lv-numbers', 'small'); if (!MODES[lv]) lv = 'small';
+
+    function makeSeq(mode){
+      var s = [], i;
+      if (mode === 'basic'){ for (i = 1; i <= 16; i++) s.push(String(i)); }
+      else if (mode === 'reverse'){ for (i = 25; i >= 1; i--) s.push(String(i)); }
+      else if (mode === 'alt'){ var H = ['가','나','다','라','마','바','사','아']; for (i = 0; i < 8; i++){ s.push(String(i + 1)); s.push(H[i]); } }
+      else {
+        var pool = []; for (i = 1; i <= 99; i++) pool.push(i);
+        s = shuffle(pool).slice(0, 16).sort(function(a, b){ return a - b; }).map(String);
+      }
+      return s;
+    }
+
+    function start(){
+      levelPicker(ui.controls, 'lv-numbers', LV, lv, function(v){ lv = v; start(); });
+      var M = MODES[lv], seq = makeSeq(lv), idx = 0, sec = 0, miss = 0;
+      var best = store.get('best-numbers-' + lv, null);
+      var showNext = lv === 'basic' || lv === 'reverse';
+      ui.stage.innerHTML = '<p class="rule">' + M.rule + '</p><div class="next-box" id="nbox"></div>' +
+        '<div class="board" style="--cols:' + M.cols + '" id="board">' + shuffle(seq).map(function(v){ return '<button class="cell" data-v="' + v + '">' + v + '</button>'; }).join('') + '</div>';
+      var nbox = ui.stage.querySelector('#nbox'), hintTimer = 0;
+      function setBox(){
+        if (showNext) nbox.innerHTML = '다음 <strong>' + seq[idx] + '</strong>';
+        else if (idx === 0) nbox.innerHTML = lv === 'small' ? '가장 작은 수부터 찾아보세요' : '<strong>1</strong>부터 시작해요';
+        else nbox.innerHTML = '방금 누른 것 <strong>' + seq[idx - 1] + '</strong> 다음은?';
+      }
+      function stats(){
+        ui.stats.innerHTML = '<span class="stat">시간 <strong>' + fmtTime(sec) + '</strong></span><span class="stat">틀린 횟수 <strong>' + miss + '</strong></span>' +
+          (best != null ? '<span class="stat">최고 <strong>' + fmtTime(best) + '</strong></span>' : '');
+      }
+      setBox(); stats();
+      var timer = setInterval(function(){ sec++; stats(); }, 1000);
+      setCleanup(function(){ clearInterval(timer); clearTimeout(hintTimer); });
+      ui.stage.querySelector('#board').onclick = function(e){
+        var b = e.target.closest('.cell'); if (!b || b.classList.contains('done')) return;
+        if (b.getAttribute('data-v') === seq[idx]){
+          b.classList.add('done'); idx++; clearTimeout(hintTimer);
+          if (idx >= seq.length){
+            clearInterval(timer); markDone('numbers');
+            var isBest = best == null || sec < best; if (isBest) store.set('best-numbers-' + lv, sec);
+            finish(ui.stage, '다 찾으셨어요!', ['걸린 시간 ' + fmtTime(sec) + ' · 틀린 횟수 ' + miss + '번',
+              isBest ? '이 방식에서 가장 빠른 기록이에요.' : '이 방식의 최고 기록은 ' + fmtTime(best) + '이에요.'], start);
+          } else setBox();
+        } else {
+          miss++; stats();
+          b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong');
+          setTimeout(function(){ b.classList.remove('wrong'); }, 450);
+          if (!showNext){
+            nbox.innerHTML = '힌트: 다음은 <strong>' + seq[idx] + '</strong>';
+            clearTimeout(hintTimer); hintTimer = setTimeout(setBox, 1800);
+          }
+        }
+      };
+    }
+    start();
+  }
+
+  /* 같은 그림 짝 맞추기 */
+  var PICS = [['🍎','사과'],['🍊','귤'],['🍇','포도'],['🍓','딸기'],['🌻','해바라기'],['🌷','튤립'],['🐟','물고기'],['🐓','닭'],['☕','커피'],['🌙','달'],['🏠','집'],['🚲','자전거']];
+  function pairsGame(){
+    var ui = shell('pairs', '카드를 두 장씩 눌러 열어 보세요. 같은 그림이면 그대로 열려 있어요.');
+    var LV = [{id:'6',label:'쉬움 6쌍'},{id:'8',label:'보통 8쌍'},{id:'10',label:'어려움 10쌍'}];
+    var lv = store.get('lv-pairs', '6'); if (!LV.some(function(l){ return l.id === lv; })) lv = '6';
+    function start(){
+      levelPicker(ui.controls, 'lv-pairs', LV, lv, function(v){ lv = v; start(); });
+      var k = +lv, cols = k === 10 ? 5 : 4;
+      var picks = shuffle(PICS).slice(0, k), deck = shuffle(picks.concat(picks));
+      var first = null, lock = false, tries = 0, matched = 0, sec = 0;
+      ui.stage.innerHTML = '<div class="board pairs" style="--cols:' + cols + '" id="board">' + deck.map(function(p, i){
+        return '<button class="pcard" data-i="' + i + '" aria-label="뒤집힌 카드"><span class="face"><span class="pic">' + p[0] + '</span><span class="word">' + p[1] + '</span></span></button>';
+      }).join('') + '</div>';
+      function stats(){ ui.stats.innerHTML = '<span class="stat">찾은 짝 <strong>' + matched + ' / ' + k + '</strong></span><span class="stat">시도 <strong>' + tries + '번</strong></span><span class="stat">시간 <strong>' + fmtTime(sec) + '</strong></span>'; }
+      stats();
+      var timer = setInterval(function(){ sec++; stats(); }, 1000);
+      setCleanup(function(){ clearInterval(timer); });
+      ui.stage.querySelector('#board').onclick = function(e){
+        var c = e.target.closest('.pcard');
+        if (!c || lock || c.classList.contains('open')) return;
+        c.classList.add('open'); c.setAttribute('aria-label', deck[+c.getAttribute('data-i')][1]);
+        if (!first){ first = c; return; }
+        tries++;
+        var a = deck[+first.getAttribute('data-i')][1], b = deck[+c.getAttribute('data-i')][1];
+        if (a === b){
+          first.classList.add('matched'); c.classList.add('matched'); first = null; matched++; stats();
+          if (matched === k){
+            clearInterval(timer); markDone('pairs');
+            setTimeout(function(){ finish(ui.stage, '짝을 모두 찾으셨어요!', [tries + '번 만에 ' + k + '쌍을 찾았어요.', '걸린 시간 ' + fmtTime(sec)], start); }, 600);
+          }
+        } else {
+          lock = true; var f = first; first = null; stats();
+          setTimeout(function(){
+            [f, c].forEach(function(x){ x.classList.remove('open'); x.setAttribute('aria-label', '뒤집힌 카드'); });
+            lock = false;
+          }, 1200);
+        }
+      };
+    }
+    start();
+  }
+
+  /* 문제 풀이 공통 */
+  function quizGame(id, hint, makeQs, wide, levels){
+    var ui = shell(id, hint);
+    var lv = levels ? store.get('lv-' + id, levels.def) : null;
+    if (levels && !levels.list.some(function(l){ return l.id === lv; })) lv = levels.def;
+    function start(){
+      setCleanup();
+      if (levels) levelPicker(ui.controls, 'lv-' + id, levels.list, lv, function(v){ lv = v; start(); });
+      else ui.controls.innerHTML = '';
+      var qs = makeQs(lv), i = 0, score = 0;
+      function stats(){ ui.stats.innerHTML = '<span class="stat">문제 <strong>' + Math.min(i + 1, qs.length) + ' / ' + qs.length + '</strong></span><span class="stat">맞힌 수 <strong>' + score + '</strong></span>'; }
+      function show(){
+        var q = qs[i], answered = false;
+        stats();
+        ui.stage.innerHTML = '<div class="q-box">' + (q.label ? '<span class="q-label">' + q.label + '</span>' : '') +
+          '<div class="q-text' + (q.sm ? ' sm' : '') + '">' + q.prompt + '</div>' +
+          '<div class="choices' + (wide || q.wide ? ' wide' : '') + '">' + q.choices.map(function(c, ci){ return '<button class="choice" data-ci="' + ci + '">' + c + '</button>'; }).join('') + '</div>' +
+          '<div class="feedback" id="fb" aria-live="polite"></div><div class="center" id="nx"></div></div>';
+        var btns = ui.stage.querySelectorAll('.choice');
+        btns.forEach(function(btn){
+          btn.onclick = function(){
+            if (answered) return; answered = true;
+            var pick = q.choices[+btn.getAttribute('data-ci')], ok = pick === q.answer;
+            if (ok) score++;
+            btns.forEach(function(x){ x.disabled = true; if (q.choices[+x.getAttribute('data-ci')] === q.answer) x.classList.add('right'); });
+            if (!ok) btn.classList.add('wrong');
+            ui.stage.querySelector('#fb').innerHTML = (ok ? '<span class="ok">맞았어요!</span>' : '<span class="no">정답은 ' + q.answer + ' 이에요.</span>') + (q.after ? '<small>' + q.after + '</small>' : '');
+            stats();
+            var last = i === qs.length - 1;
+            ui.stage.querySelector('#nx').innerHTML = '<button class="btn" id="nextq">' + (last ? '결과 보기' : '다음 문제') + '</button>';
+            var nb = ui.stage.querySelector('#nextq'); nb.focus({ preventScroll:true });
+            nb.onclick = function(){
+              if (last){
+                markDone(id);
+                var t = score >= 8 ? '아주 잘하셨어요!' : score >= 5 ? '잘하셨어요!' : '수고하셨어요!';
+                ui.stats.innerHTML = '';
+                finish(ui.stage, t, [qs.length + '문제 중 ' + score + '문제를 맞히셨어요.', '내일 또 한 판 해 보세요.'], start);
+              } else { i++; show(); }
+            };
+          };
+        });
+      }
+      show();
+    }
+    start();
+  }
+
+  function withChoices(ans, deltas, fmt){
+    var set = [ans];
+    shuffle(deltas).forEach(function(d){ var v = ans + d; if (set.length < 4 && v > 0 && set.indexOf(v) < 0) set.push(v); });
+    return { choices: shuffle(set).map(fmt), answer: fmt(ans) };
+  }
+
+  function makeMath(){
+    var types = shuffle(['add','add','add','sub','sub','sub','mul','mul','chg','chg']);
+    return types.map(function(t){
+      var q;
+      if (t === 'add'){ var a = rand(12, 58), b = rand(5, 39); q = withChoices(a + b, [1,2,10,-1,-2,-10,3], String); q.label = '덧셈'; q.prompt = a + ' + ' + b + ' = ?'; }
+      else if (t === 'sub'){ var a2 = rand(30, 95), b2 = rand(6, a2 - 8); q = withChoices(a2 - b2, [1,2,10,-1,-2,-10,3], String); q.label = '뺄셈'; q.prompt = a2 + ' − ' + b2 + ' = ?'; }
+      else if (t === 'mul'){ var a3 = rand(2, 9), b3 = rand(2, 9); q = withChoices(a3 * b3, [a3, -a3, b3, -b3, 1, -1], String); q.label = '구구단'; q.prompt = a3 + ' × ' + b3 + ' = ?'; }
+      else {
+        var price = rand(11, 92) * 100, paid = price < 5000 ? 5000 : 10000;
+        q = withChoices(paid - price, [100,200,500,1000,-100,-200,-500,-1000], won);
+        q.label = '거스름돈'; q.prompt = '시장에서 ' + won(price) + '어치 사고<br>' + won(paid) + '을 냈어요.<br>거스름돈은?';
+      }
+      return q;
+    });
+  }
+
+  /* 사자성어: 하·중·상 — [읽기, 한자, 뜻] */
+  var IDIOMS = {
+    low: [
+      ['일석이조','一石二鳥','한 가지 일로 두 가지 이익을 얻음'],['작심삼일','作心三日','굳게 먹은 마음이 사흘을 가지 못함'],
+      ['동문서답','東問西答','묻는 말에 엉뚱한 대답을 함'],['이심전심','以心傳心','말하지 않아도 마음과 마음으로 뜻이 통함'],
+      ['우왕좌왕','右往左往','이리저리 왔다 갔다 하며 갈피를 잡지 못함'],['대기만성','大器晩成','크게 될 사람은 늦게 이루어짐'],
+      ['고진감래','苦盡甘來','고생 끝에 즐거움이 옴'],['유비무환','有備無患','미리 준비하면 걱정할 것이 없음'],
+      ['십중팔구','十中八九','열 가운데 여덟이나 아홉, 거의 대부분'],['자업자득','自業自得','자기가 저지른 일의 결과를 자기가 받음'],
+      ['과유불급','過猶不及','지나친 것은 모자란 것과 같음'],['다다익선','多多益善','많으면 많을수록 더 좋음'],
+      ['금시초문','今始初聞','이제야 처음 들음'],['사필귀정','事必歸正','모든 일은 결국 바른 길로 돌아감'],
+      ['일편단심','一片丹心','변하지 않는 한결같은 참된 마음'],['박장대소','拍掌大笑','손뼉을 치며 크게 웃음'],
+      ['천생연분','天生緣分','하늘이 정해 준 인연'],['아전인수','我田引水','제 논에 물 대기, 자기에게만 이롭게 함'],
+      ['용두사미','龍頭蛇尾','시작은 거창하나 끝은 보잘것없음'],['죽마고우','竹馬故友','어릴 때부터 함께 놀며 자란 친구']
+    ],
+    mid: [
+      ['새옹지마','塞翁之馬','인생의 좋고 나쁜 일은 미리 알 수 없음'],['역지사지','易地思之','처지를 바꾸어 생각해 봄'],
+      ['와신상담','臥薪嘗膽','뜻을 이루려고 온갖 괴로움을 참고 견딤'],['전화위복','轉禍爲福','재앙이 바뀌어 오히려 복이 됨'],
+      ['각골난망','刻骨難忘','입은 은혜가 뼈에 새길 만큼 잊히지 않음'],['결초보은','結草報恩','죽어서도 은혜를 잊지 않고 갚음'],
+      ['오매불망','寤寐不忘','자나 깨나 잊지 못함'],['금상첨화','錦上添花','좋은 일에 또 좋은 일이 더해짐'],
+      ['설상가상','雪上加霜','어려운 일이 연거푸 겹침'],['동병상련','同病相憐','처지가 같은 사람끼리 서로 가엾게 여김'],
+      ['온고지신','溫故知新','옛것을 익혀 새것을 앎'],['청출어람','靑出於藍','제자가 스승보다 나음'],
+      ['어부지리','漁夫之利','둘이 다투는 사이 엉뚱한 사람이 이익을 봄'],['타산지석','他山之石','남의 하찮은 말과 행동도 나를 닦는 데 도움이 됨'],
+      ['감언이설','甘言利說','귀가 솔깃하도록 달콤하게 꾀는 말'],['견물생심','見物生心','물건을 보면 갖고 싶은 마음이 생김'],
+      ['마이동풍','馬耳東風','남의 말을 귀담아듣지 않고 흘려버림'],['막상막하','莫上莫下','누가 더 낫고 못한지 가리기 어려움'],
+      ['노심초사','勞心焦思','몹시 마음을 쓰며 애를 태움'],['주경야독','晝耕夜讀','낮에는 일하고 밤에는 공부함'],
+      ['안하무인','眼下無人','눈 아래 사람이 없는 듯 몹시 교만함'],['형설지공','螢雪之功','고생하면서도 부지런히 공부한 보람']
+    ],
+    high: [
+      ['수주대토','守株待兎','그루터기를 지키며 토끼를 기다림, 요행만 바람'],['각주구검','刻舟求劍','융통성 없이 낡은 방식만 고집함'],
+      ['교언영색','巧言令色','듣기 좋게 꾸민 말과 알랑거리는 얼굴빛'],['구밀복검','口蜜腹劍','입으로는 달콤하게 말하나 속으로는 해칠 마음을 품음'],
+      ['권토중래','捲土重來','실패한 뒤 힘을 길러 다시 도전함'],['낭중지추','囊中之錐','재능이 뛰어난 사람은 숨어 있어도 드러남'],
+      ['당랑거철','螳螂拒轍','제 힘도 모르고 강한 상대에게 덤빔'],['등하불명','燈下不明','가까이 있는 것을 오히려 잘 모름'],
+      ['문경지교','刎頸之交','목숨을 함께할 만큼 깊은 사귐'],['반포지효','反哺之孝','자식이 자라서 부모의 은혜를 갚는 효도'],
+      ['백년하청','百年河淸','아무리 기다려도 이루어지기 어려움'],['순망치한','脣亡齒寒','가까운 하나가 망하면 다른 하나도 위태로움'],
+      ['사면초가','四面楚歌','사방이 적으로 둘러싸여 도움받을 곳이 없음'],['오비이락','烏飛梨落','공교롭게 일이 겹쳐 억울하게 의심받음'],
+      ['우공이산','愚公移山','어리석어 보여도 꾸준히 하면 큰일을 이룸'],['조삼모사','朝三暮四','눈앞의 차이만 알고 결과가 같음을 모름'],
+      ['지록위마','指鹿爲馬','윗사람을 속이고 권세를 함부로 휘두름'],['침소봉대','針小棒大','작은 일을 크게 부풀려 말함'],
+      ['토사구팽','兎死狗烹','필요할 때 쓰고 쓸모없어지면 버림'],['풍수지탄','風樹之歎','효도하려 할 때 부모님이 이미 곁에 없음을 슬퍼함'],
+      ['호가호위','狐假虎威','남의 힘을 빌려 위세를 부림'],['화룡점정','畵龍點睛','가장 중요한 부분을 마무리하여 일을 완성함'],
+      ['읍참마속','泣斬馬謖','큰 목적을 위해 아끼는 사람도 원칙대로 처벌함']
+    ]
+  };
+  function makeIdioms(lv){
+    var pool = IDIOMS[lv] || IDIOMS.low;
+    var kinds = lv === 'low' ? ['mean2idiom','tail'] : lv === 'mid' ? ['mean2idiom','idiom2mean'] : ['hanja','hanja','mean2idiom','idiom2mean'];
+    return shuffle(pool).slice(0, 10).map(function(p, n){
+      var others = shuffle(pool.filter(function(x){ return x !== p; })).slice(0, 3);
+      var kind = kinds[n % kinds.length], q = { after: p[0] + ' (' + p[1] + ') · ' + p[2] };
+      if (kind === 'mean2idiom'){ q.label = '뜻을 보고 고르기'; q.prompt = p[2]; q.sm = true; q.answer = p[0]; q.choices = shuffle([p[0]].concat(others.map(function(x){ return x[0]; }))); }
+      else if (kind === 'idiom2mean'){ q.label = '알맞은 뜻 고르기'; q.prompt = p[0]; q.wide = true; q.answer = p[2]; q.choices = shuffle([p[2]].concat(others.map(function(x){ return x[2]; }))); }
+      else if (kind === 'tail'){ q.label = '뒷글자 잇기'; q.prompt = p[0].slice(0, 2) + ' <span style="color:var(--c-proverb)">○○</span>'; q.answer = p[0].slice(2); q.choices = shuffle([q.answer].concat(others.map(function(x){ return x[0].slice(2); }))); }
+      else { q.label = '한자 읽기'; q.prompt = p[1]; q.answer = p[0]; q.choices = shuffle([p[0]].concat(others.map(function(x){ return x[0]; }))); q.after = p[1] + ' · ' + p[2]; }
+      return q;
+    });
+  }
+  var IDIOM_LEVELS = { def:'low', list:[{id:'low',label:'하 · 기본 사자성어'},{id:'mid',label:'중 · 뜻 풀이'},{id:'high',label:'상 · 한자 읽기'}] };
+
+
+  function render(){
+    var v = location.hash.replace('#', '');
+    var inGame = !!GAMES[v];
+    document.body.classList.toggle('in-game', inGame);
+    if (v === 'blocks') blocksGame();
+    else if (v === 'numbers') numbersGame();
+    else if (v === 'pairs') pairsGame();
+    else if (v === 'math') quizGame('math', '보기 중에서 정답을 골라 주세요. 시간 제한은 없어요.', makeMath, false);
+    else if (v === 'idiom') quizGame('idiom', '단계를 고르고 알맞은 답을 골라 주세요. 한 판에 10문제가 나오고, 답을 고르면 한자와 뜻을 함께 알려 드려요.', makeIdioms, false, IDIOM_LEVELS);
+    else home();
+    drawSky();
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', render);
+  render();
+})();
+</script>
+
+</body></html>
